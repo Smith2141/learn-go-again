@@ -7,8 +7,8 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Привет! Разработка в Docker работает!")
-		fmt.Fprintf(w, "\nHello again !!!")
+		fmt.Fprintln(w, "Привет! Разработка в Docker работает!")
+		fmt.Fprintln(w, "Hello again !!!")
 	})
 	fmt.Println("Сервер запущен на порту 8080...")
 	http.ListenAndServe(":8080", nil)
