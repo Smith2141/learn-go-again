@@ -1,0 +1,18 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+bin = "./tmp/main"
+cmd = "go build -o ./tmp/main ./main.go"
+delay = 1000
+exclude_dir = ["assets", "tmp", "vendor", ".git", ".vscode"]
+include_ext = ["go", "tpl", "html", "tmpl"]
+# Включаем принудительный опрос файловой системы
+poll = true
+poll_interval = 500
+
+[log]
+time = true
+
+[screen]
+clear_on_rebuild = true
