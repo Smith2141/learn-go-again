@@ -1,14 +1,16 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	var str string
-	str = "Hello, world!"
-	result := string(str[0])
+	// определите переменные ver, id, pi
+	var (
+		ver = 0.001
+		id int
+		pi = 3.1415
+	)
 
-	fmt.Println(result)
-	println(result)
+	var verV string = fmt.Sprintf("v%g", ver)
+
+	fmt.Println("ver =", verV, "id =", id, "pi =", pi)
 }
