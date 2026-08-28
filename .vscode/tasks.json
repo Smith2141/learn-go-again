@@ -1,0 +1,59 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "APP START LOCAL",
+            "icon": {
+                "color": "terminal.ansiRed",
+                "id": "arrow-circle-up"
+            },
+            "detail": "Старт локального стека приложения",
+            "type": "shell",
+            "command": "make up",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": true,
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "APP STOP",
+            "icon": {
+                "color": "terminal.ansiRed",
+                "id": "arrow-circle-down"
+            },
+            "detail": "Останов стека приложения",
+            "type": "shell",
+            "command": "make down",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": true,
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run APP",
+            "icon": {
+                "color": "terminal.ansiGreen",
+                "id": "beaker"
+            },
+            "detail": "Запуск unit тестов приложения",
+            "type": "shell",
+            "command": "make run",
+            "group": "test",
+            "problemMatcher": []
+        }
+    ]
+}
