@@ -5,5 +5,10 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello, world!")
+	var str string
+	str = "Hello, world!"
+	result := string(str[0])
+
+	fmt.Println(result)
+	println(result)
 }
