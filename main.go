@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -12,64 +13,62 @@ const (
 	z          uint32 = 1997
 	millennium uint32 = 1981
 	x          uint32 = 1965
-	boomer     uint32 = 1997
-
-	oldest  uint32 = 1946
-	current uint32 = 2026
+	boomer     uint32 = 1946
 )
 
 const errorValueMessage = "Значение года ВНЕ диапазона!"
 
 func main() {
-	input, error := getInput()
-
-	if error != nil {
-		fmt.Println(error)
+	year, err := getYearFromInput()
+	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
-	year64, error := strconv.ParseUint(input, 10, 8)
-	if error != nil {
-		// fmt.Println(error)
-		fmt.Println(errorValueMessage)
-		return
-	}
-
-	year := uint32(year64)
-
-	result, error := getGeneration(year)
-	if error != nil {
-		fmt.Println(error)
+	result, err := getGeneration(year)
+	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
 	fmt.Println("Привет, " + result)
 }
 
-func getInput() (string, error) {
-	// Create a scanner that wraps standard input
+func getYearFromInput() (uint32, error) {
+	// Сначала проверяем переменную окружения
+	if envYear := os.Getenv("TEST_YEAR"); envYear != "" {
+		fmt.Printf("Используем год из окружения: %s\n", envYear)
+		year, err := strconv.ParseUint(envYear, 10, 32)
+		if err != nil {
+			return 0, fmt.Errorf("неверный формат TEST_YEAR: %v", err)
+		}
+		return uint32(year), nil
+	}
+
+	// Если переменной нет - запрашиваем ввод
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print("Введите год: ")
 
-	// Scan() blocks until user hits Enter
 	if scanner.Scan() {
-		input := scanner.Text()
-		fmt.Println("You typed:", input)
-		return input, nil
+		input := strings.TrimSpace(scanner.Text())
+		fmt.Println("Вы ввели:", input)
+
+		year, err := strconv.ParseUint(input, 10, 32)
+		if err != nil {
+			return 0, fmt.Errorf(errorValueMessage)
+		}
+		return uint32(year), nil
 	}
 
-	error := fmt.Errorf("Не удалось прочитать ввод")
-	return "", error
+	return 0, fmt.Errorf("не удалось прочитать ввод")
 }
 
 func getGeneration(year uint32) (string, error) {
-	if oldest > year || year > current {
-		error := fmt.Errorf(errorValueMessage)
-		return "", error
+	if boomer > year {
+		return "", fmt.Errorf(errorValueMessage)
 	}
 
 	var result string
-
 	switch {
 	case year > alfa:
 		result = "Альфа"
@@ -79,8 +78,10 @@ func getGeneration(year uint32) (string, error) {
 		result = "Миллениал"
 	case year > x:
 		result = "X"
-	case year > boomer:
+	case year >= boomer:
 		result = "Бумер"
+	default:
+		result = "Неизвестное поколение"
 	}
 	return result, nil
 }
