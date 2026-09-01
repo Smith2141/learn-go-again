@@ -6,11 +6,12 @@ func main() {
 
 	var a, b, d int = 1, 2, 4
 
-	var p_nums [4]*int // массив из 4 указателей на значения типа int
+	p_nums := [4]*int{&a, &b, nil, &d} // массив из 4 указателей на значения типа int
 
-	p_nums[0] = &a
-	p_nums[1] = &b
-	p_nums[3] = &d
-
-	fmt.Println(p_nums) // [0xc000010100 0xc000010108 <nil> 0xc000010110]
+	for _, p := range p_nums {
+		// если указатель не равен nil, выводим значение, которое хранится по его адресу
+		if p != nil {
+			fmt.Println(*p)
+		}
+	}
 }
