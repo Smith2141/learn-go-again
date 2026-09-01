@@ -4,8 +4,8 @@ import "fmt"
 
 func main() {
 
-	var x int = 4
-	var p *int = &x            // указатель получает адрес переменной
-	fmt.Println("Address:", p) // значение указателя - адрес переменной x
-	fmt.Println("Value:", *p)  // значение переменной x
+	p := new(int)
+	fmt.Println("Value:", *p) // Value: 0 - значение по умолчанию
+	*p = 8                    // изменяем значение
+	fmt.Println("Value:", *p) // Value: 8
 }
