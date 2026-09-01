@@ -11,7 +11,7 @@ func main() {
 	for _, p := range p_nums {
 		// если указатель не равен nil, выводим значение, которое хранится по его адресу
 		if p != nil {
-			fmt.Println(*p)
+			fmt.Println(p, ":", *p)
 		}
 	}
 }
