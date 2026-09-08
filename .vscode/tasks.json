@@ -47,9 +47,9 @@
             "label": "Run APP",
             "icon": {
                 "color": "terminal.ansiGreen",
-                "id": "beaker"
+                "id": "broadcast"
             },
-            "detail": "Запуск unit тестов приложения",
+            "detail": "Запуск приложения",
             "type": "shell",
             "command": "make run",
             "group": "test",
