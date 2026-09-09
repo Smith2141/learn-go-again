@@ -21,9 +21,9 @@ func main() {
 		"хамон":    1500,
 	}
 
-	for p := range products {
-		if products[p] > 500 {
-			fmt.Println(p)
+	for product, price := range products {
+		if price > 500 {
+			fmt.Println(product)
 		}
 	}
 
@@ -31,17 +31,17 @@ func main() {
 	delimiter := strings.Repeat("-", 50)
 	fmt.Println(delimiter)
 
-	var order = []string{"хлеб", "буженина", "сыр", "огурцы", "чай"}
+	var order = []string{"хлеб", "буженина", "сыр", "огурцы"}
 
-	var order_sum int = 0
+	var total int = 0
 	for _, item := range order {
 		if price, ok := products[item]; ok {
 			// добавить форматирование !!!
 			fmt.Printf("Товар: %s, стоимость %d\n", item, price)
-			order_sum += price
+			total += price
 		}
 	}
 
 	fmt.Println(delimiter)
-	fmt.Println("Order total: ", order_sum)
+	fmt.Println("Стоимость заказа ", total)
 }
