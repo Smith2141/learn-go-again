@@ -37,7 +37,7 @@ func main() {
 	for _, item := range order {
 		if price, ok := products[item]; ok {
 			// добавить форматирование !!!
-			fmt.Println(products[item], price)
+			fmt.Printf("Товар: %s, стоимость %d\n", item, price)
 			order_sum += price
 		}
 	}
