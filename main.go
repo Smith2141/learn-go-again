@@ -4,32 +4,25 @@ import (
 	"fmt"
 )
 
-func main() {
-	input := []string{
-		"cat",
-		"dog",
-		"bird",
-		"dog",
-		"parrot",
-		"cat",
-	}
-
-	fmt.Println("filtered result: ", RemoveDuplicates(input))
+type Person struct {
+	Name     string // Имя
+	NumChild int    // Количество детей
+	Age      int    // Возраст
 }
 
-func RemoveDuplicates(input []string) []string {
-	var storage = map[string]string{}
-	var result []string
+func main() {
 
-	for _, value := range input {
-		if _, ok := storage[value]; !ok {
-			// fmt.Println("is NOT present: ", value)
-			// fmt.Println("input BEFORE: ", result)
-			result = append(result, value)
-			// fmt.Println("input AFTER: ", result)
-            storage[value] = value
-		}
+	man := Person{
+		Name:     "Alex",
+		Age:      30,
+		NumChild: 2,
 	}
 
-	return result
+	fmt.Printf("Man %#v\n", man)
+	additional(man)
+}
+
+func additional(p Person) {
+	fmt.Printf("Man %#v\n", p)
+
 }
