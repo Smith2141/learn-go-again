@@ -21,13 +21,13 @@ func RemoveDuplicates(input []string) []string {
 	var storage = map[string]string{}
 	var result []string
 
-	for i, value := range input {
+	for _, value := range input {
 		if _, ok := storage[value]; !ok {
 			// fmt.Println("is NOT present: ", value)
-			storage[value] = value
 			// fmt.Println("input BEFORE: ", result)
-			result = append(result, input[i])
+			result = append(result, value)
 			// fmt.Println("input AFTER: ", result)
+            storage[value] = value
 		}
 	}
 
