@@ -7,9 +7,9 @@ import (
 )
 
 type Person struct {
-	Name        string // Имя
-	Email       string
-	DateOfBirth time.Time
+	Name        string `json:"Имя"`
+	Email       string `json:"Почта"`
+	DateOfBirth time.Time `json:"-"`
 }
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 
 	if err != nil {
 		fmt.Println(err)
-	} else {
-		fmt.Println(string(result))
 	}
+
+	fmt.Println(string(result))
 }
