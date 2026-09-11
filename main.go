@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+	"log"
 )
 
 type Person struct {
@@ -17,13 +18,14 @@ func main() {
 	man := Person{
 		Name:  "Alex",
 		Email: "alex@yandex.ru",
+		DateOfBirth:time.Now(),
 	}
 
 	result, err := json.Marshal(man)
 
 	if err != nil {
-		fmt.Println(err)
+        log.Fatalln("unable marshal to json")
 	}
 
-	fmt.Println(string(result))
+	fmt.Printf("Man %v\n",string(result))
 }
