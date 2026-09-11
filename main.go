@@ -1,28 +1,29 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type Person struct {
-	Name     string // Имя
-	NumChild int    // Количество детей
-	Age      int    // Возраст
+	Name        string // Имя
+	Email       string
+	DateOfBirth time.Time
 }
 
 func main() {
 
 	man := Person{
-		Name:     "Alex",
-		Age:      30,
-		NumChild: 2,
+		Name:  "Alex",
+		Email: "alex@yandex.ru",
 	}
 
-	fmt.Printf("Man %#v\n", man)
-	additional(man)
-}
+	result, err := json.Marshal(man)
 
-func additional(p Person) {
-	fmt.Printf("Man %#v\n", p)
-
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(string(result))
+	}
 }
