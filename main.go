@@ -1,31 +1,14 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
-	"time"
+	"my-go-app/foo"
 )
 
-type Person struct {
-	Name        string    `json:"Имя"`
-	Email       string    `json:"Почта"`
-	DateOfBirth time.Time `json:"-"`
-}
-
 func main() {
-
-	man := Person{
-		Name:        "Alex",
-		Email:       "alex@yandex.ru",
-		DateOfBirth: time.Now(),
-	}
-
-	result, err := json.Marshal(man)
-
-	if err != nil {
-		log.Fatalln("unable marshal to json")
-	}
-
-	fmt.Printf("Man %v\n", string(result))
+	// f := foo.privateFoo{} // ошибка компиляции
+	f := foo.NewPrivateFoo()
+	fmt.Println(f.Value) // поле Value экспортируемое, то есть его можно использовать
+	// getter demo
+	fmt.Println(foo.GetPrivateFooSecret(f))
 }
