@@ -1,9 +1,11 @@
 package foo
 
+type secret string
+
 // privateFoo — не экспортируемый тип
 type privateFoo struct {
 	Value string
-	secret_val string
+	secret_val secret
 }
 
 // NewPrivateFoo — конструктор типа privateFoo
@@ -13,6 +15,6 @@ func NewPrivateFoo() privateFoo {
 }
 
 // getter
-func GetPrivateFooSecret(p privateFoo) string {
+func GetPrivateFooSecret(p privateFoo) secret {
 	return p.secret_val
 }
