@@ -1,66 +1,37 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
-const RawResp string = `
-{
-    "header": {
-        "code": 0,
-        "message": "OK"
-    },
-    "data": [{
-        "type": "user",
-        "id": 100,
-        "attributes": {
-            "email": "bob@yandex.ru",
-            "article_ids": [10, 11, 12]
-        }
-    }]
-} 
-`
-
-type Response struct {
-	Header Header `json:"header"`
-	Data   []Item `json:"data,omitempty"`
-}
-
-type Header struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-}
-
-type Item struct {
-	Type       string     `json:"type"`
-	Id         int        `json:"id"`
-	Attributes Attributes `json:"attributes"`
-}
-
-type Attributes struct {
-	Email      string `json:"email"`
-	ArticleIds [3]int `json:"article_ids"`
-}
-
-func ReadResponse(rawResp string) (Response, error) {
-	var resp Response
-
-	err := json.Unmarshal([]byte(rawResp), &resp)
-
-	return resp, err
-}
+const filter string = ".vscode"
 
 func main() {
-	result, error := ReadResponse(RawResp)
-	if error != nil {
-		fmt.Println("Error unmarshaling JSON:", error)
+	PrintAllFiles(".", filter)
+}
+
+func PrintAllFiles(path, filter string) {
+	// получаем список всех элементов в папке (и файлов, и директорий)
+	files, err := os.ReadDir(path)
+	if err != nil {
+		fmt.Println("unable to get list of files", err)
+		return
 	}
-
-	fmt.Printf("DTO %v\n", result.Header.Message)
-
-	for _, item := range result.Data {
-		fmt.Printf("DTO %v\n", item.Attributes.Email)
+	//  проходим по списку
+	for _, f := range files {
+		// получаем имя элемента
+		// filepath.Join — функция, которая собирает путь к элементу с разделителями
+		filename := filepath.Join(path, f.Name())
+		// печатаем имя элемента
+		if strings.Contains(filename, filter) {
+			fmt.Println(filename)
+		}
+		// если элемент — директория, то вызываем для него рекурсивно ту же функцию
+		if f.IsDir() {
+			PrintAllFiles(filename, filter)
+		}
 	}
-
 }
