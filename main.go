@@ -2,36 +2,21 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
-	"strings"
 )
 
-const filter string = ".vscode"
-
-func main() {
-	PrintAllFiles(".", filter)
+func Generate(seed int) func() {
+    return func() {
+        fmt.Println(seed) // замыкание получает внешнюю переменную seed
+        seed += 2 // переменная модифицируется
+    }
+    
 }
 
-func PrintAllFiles(path, filter string) {
-	// получаем список всех элементов в папке (и файлов, и директорий)
-	files, err := os.ReadDir(path)
-	if err != nil {
-		fmt.Println("unable to get list of files", err)
-		return
-	}
-	//  проходим по списку
-	for _, f := range files {
-		// получаем имя элемента
-		// filepath.Join — функция, которая собирает путь к элементу с разделителями
-		filename := filepath.Join(path, f.Name())
-		// печатаем имя элемента
-		if strings.Contains(filename, filter) {
-			fmt.Println(filename)
-		}
-		// если элемент — директория, то вызываем для него рекурсивно ту же функцию
-		if f.IsDir() {
-			PrintAllFiles(filename, filter)
-		}
-	}
+func main() {
+    iterator := Generate(0)
+    iterator()
+    iterator()
+    iterator()
+    iterator()
+    iterator()
 }
