@@ -24,7 +24,7 @@ const RawResp string = `
 
 type Response struct {
 	Header Header `json:"header"`
-	Data   []Item `json:"data"`
+	Data   []Item `json:"data,omitempty"`
 }
 
 type Header struct {
