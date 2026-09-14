@@ -1,22 +1,15 @@
 package main
 
-import (
-	"fmt"
-)
-
-func Generate(seed int) func() {
-    return func() {
-        fmt.Println(seed) // замыкание получает внешнюю переменную seed
-        seed += 2 // переменная модифицируется
-    }
-    
-}
+import "fmt"
 
 func main() {
-    iterator := Generate(0)
-    iterator()
-    iterator()
-    iterator()
-    iterator()
-    iterator()
+	var age, name = add(4, 5, "Tom", "Simpson")
+	fmt.Println(age)  // 9
+	fmt.Println(name) // Tom Simpson
+}
+
+func add(x, y int, firstName, lastName string) (z int, fullName string) {
+	z = x + y
+	fullName = firstName + " " + lastName
+	return
 }
