@@ -1,64 +1,49 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-type Item struct {
-	NoOption   string
-	Parameter1 string
-	Parameter2 int
-}
+type figure int
 
-func NewItem(opts ...func(*Item)) *Item {
-	// инициализируем типовыми значениями
-	i := &Item{
-		NoOption:   "usual",
-		Parameter1: "default",
-		Parameter2: 42,
-	}
-	// применяем опции в том порядке, в котором они были заявлены
-	for _, opt := range opts {
-		opt(i)
-	}
-	return i
-}
+const pi float64 = 3.1415
 
-func Option1(option1 string) func(*Item) {
-	return func(i *Item) {
-		i.Parameter1 = option1
-	}
-}
-func Option2(option2 int) func(*Item) {
-	return func(i *Item) {
-		i.Parameter2 = option2
+const (
+	square   figure = iota // квадрат
+	circle                 // круг
+	triangle               // равносторонний треугольник
+	unknown
+)
+
+func area(f figure) (func(float64) float64, bool) {
+
+	switch f {
+	case square:
+		return func(f float64) float64 { return f * f }, true
+	case circle:
+		return func(f float64) float64 { return pi * f * f }, true
+	case triangle:
+		return func(f float64) float64 { return math.Sqrt(3) / 4 * f * f }, true
+	default:
+		return func(f float64) float64 { return f }, false
 	}
 }
 
 func main() {
-	// с параметрами по умолчанию
-	item1 := NewItem()
-	// с применением одной опции
-	item2 := NewItem(Option2(70))
-	// или двух
-	item3 := NewItem(Option1("unusual"), Option2(99))
-	// опции можно заявлять в разном порядке
-	item4 := NewItem(Option2(88), Option1("rare"))
+	// var myFigure figure = square
+	// var myFigure figure = triangle
+	// var myFigure figure = circle
+	var myFigure figure = unknown
 
-	fmt.Println(item1.Parameter1)
-	fmt.Println(item1.Parameter2)
-	fmt.Println(item1.NoOption)
-	fmt.Println("**********")
+	ar, ok := area(myFigure)
+	x := 10.0
 
-	fmt.Println(item2.Parameter1)
-	fmt.Println(item2.Parameter2)
-	fmt.Println(item2.NoOption)
-	fmt.Println("**********")
+	if !ok {
+		fmt.Println("Ошибка, фигура не известна")
+		return
+	}
+	myArea := ar(x)
 
-	fmt.Println(item3.Parameter1)
-	fmt.Println(item3.Parameter2)
-	fmt.Println(item3.NoOption)
-	fmt.Println("**********")
-
-	fmt.Println(item4.Parameter1)
-	fmt.Println(item4.Parameter2)
-	fmt.Println(item4.NoOption)
+	fmt.Println(myArea)
 }
