@@ -26,7 +26,7 @@ func area(f figure) (func(float64) float64, bool) {
 	case triangle:
 		return func(f float64) float64 { return math.Sqrt(3) / 4 * f * f }, true
 	default:
-		return func(f float64) float64 { return f }, false
+		return nil, false
 	}
 }
 
