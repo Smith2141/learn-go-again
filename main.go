@@ -10,15 +10,15 @@ import (
 const filter string = ".vscode"
 
 func main() {
-    var predicate func(string)bool = containsDot
+	var predicate func(string) bool = containsDot
 	PrintFilesWithFuncFilter(".", predicate)
 }
 
 func PrintFilesWithFuncFilter(path string, predicate func(string) bool) {
 	// создаём переменную, содержащую функцию обхода
 	// мы создаём её заранее, а не через оператор :=, чтобы замыкание могло сослаться на него
-	var walk func(string, func(string)bool)
-	walk = func(path string, p func(string)bool) {
+	var walk func(string)
+	walk = func(path string) {
 		// получаем список всех элементов в папке (и файлов, и директорий)
 		files, err := os.ReadDir(path)
 		if err != nil {
@@ -31,17 +31,17 @@ func PrintFilesWithFuncFilter(path string, predicate func(string) bool) {
 			// filepath.Join — функция, которая собирает путь к элементу с разделителями
 			filename := filepath.Join(path, f.Name())
 			// печатаем имя элемента, если путь к нему содержит filter, который получим из внешнего контекста
-			if p(filename) {
+			if predicate(filename) {
 				fmt.Println(filename)
 			}
 			// если элемент — директория, то вызываем для него рекурсивно ту же функцию
 			if f.IsDir() {
-				walk(filename, predicate)
+				walk(filename)
 			}
 		}
 	}
 	// теперь вызовем функцию walk
-	walk(path, predicate)
+	walk(path)
 }
 
 // containsDot возвращает все пути, содержащие точки
