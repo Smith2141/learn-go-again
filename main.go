@@ -2,48 +2,50 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
-type figure int
-
-const pi float64 = 3.1415
-
-const (
-	square   figure = iota // квадрат
-	circle                 // круг
-	triangle               // равносторонний треугольник
-	unknown
-)
-
-func area(f figure) (func(float64) float64, bool) {
-
-	switch f {
-	case square:
-		return func(f float64) float64 { return f * f }, true
-	case circle:
-		return func(f float64) float64 { return pi * f * f }, true
-	case triangle:
-		return func(f float64) float64 { return math.Sqrt(3) / 4 * f * f }, true
-	default:
-		return nil, false
-	}
-}
+const filter string = ".vscode"
 
 func main() {
-	// var myFigure figure = square
-	// var myFigure figure = triangle
-	// var myFigure figure = circle
-	var myFigure figure = unknown
+    var predicate func(string)bool = containsDot
+	PrintFilesWithFuncFilter(".", predicate)
+}
 
-	ar, ok := area(myFigure)
-	x := 10.0
-
-	if !ok {
-		fmt.Println("Ошибка, фигура не известна")
-		return
+func PrintFilesWithFuncFilter(path string, predicate func(string) bool) {
+	// создаём переменную, содержащую функцию обхода
+	// мы создаём её заранее, а не через оператор :=, чтобы замыкание могло сослаться на него
+	var walk func(string, func(string)bool)
+	walk = func(path string, p func(string)bool) {
+		// получаем список всех элементов в папке (и файлов, и директорий)
+		files, err := os.ReadDir(path)
+		if err != nil {
+			fmt.Println("unable to get list of files", err)
+			return
+		}
+		//  проходим по списку
+		for _, f := range files {
+			// получаем имя элемента
+			// filepath.Join — функция, которая собирает путь к элементу с разделителями
+			filename := filepath.Join(path, f.Name())
+			// печатаем имя элемента, если путь к нему содержит filter, который получим из внешнего контекста
+			if p(filename) {
+				fmt.Println(filename)
+			}
+			// если элемент — директория, то вызываем для него рекурсивно ту же функцию
+			if f.IsDir() {
+				walk(filename, predicate)
+			}
+		}
 	}
-	myArea := ar(x)
+	// теперь вызовем функцию walk
+	walk(path, predicate)
+}
 
-	fmt.Println(myArea)
+// containsDot возвращает все пути, содержащие точки
+func containsDot(s string) bool {
+	// return !strings.Contains(s, ".git")
+	return !strings.HasPrefix(s, ".")
 }
