@@ -5,10 +5,11 @@ import (
 )
 
 func EvaluationOrder() {
-	defer fmt.Println("deferred 1")
-	fmt.Println("evaluated 1")
-	defer fmt.Println("deferred 2")
-	fmt.Println("evaluated 2")
+	fmt.Println("Hello")
+	for i := 1; i <= 3; i++ {
+		defer fmt.Println(i)
+	}
+	fmt.Println("World")
 }
 
 func main() {
