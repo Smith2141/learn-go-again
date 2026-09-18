@@ -7,11 +7,10 @@ import (
 var Global = 5
 
 func useGlobal() {
-	// 1. Ловим начальное значение Global
 	defer func(checkout int) {
 		// 3. Возвращаем Global исходное значение
 		Global = checkout
-	}(Global)
+	}(Global) // 1. Ловим начальное значение Global
 
 	// 2. Меняем значение
 	Global = 42
