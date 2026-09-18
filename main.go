@@ -4,14 +4,18 @@ import (
 	"fmt"
 )
 
-func EvaluationOrder() {
-	fmt.Println("Hello")
-	for i := 1; i <= 3; i++ {
-		defer fmt.Println(i)
-	}
-	fmt.Println("World")
+func unintuitive() (value string) {
+	defer func() { value = "На самом деле" }() // круглые скобки в конце означают, что функция вызывается
+	return "Казалось бы"
+}
+
+func intuitive() (string){
+    value := "Казалось бы"
+    defer func() {value = "На самом деле"}()
+    return value
 }
 
 func main() {
-	EvaluationOrder()
+	// fmt.Println(unintuitive())
+	fmt.Println(intuitive())
 }
