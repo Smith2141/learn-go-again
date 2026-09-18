@@ -4,18 +4,26 @@ import (
 	"fmt"
 )
 
-func unintuitive() (value string) {
-	defer func() { value = "На самом деле" }() // круглые скобки в конце означают, что функция вызывается
-	return "Казалось бы"
-}
+var Global = 5
 
-func intuitive() (string){
-    value := "Казалось бы"
-    defer func() {value = "На самом деле"}()
-    return value
+func useGlobal() {
+	// 1. Ловим начальное значение Global
+	defer func(checkout int) {
+		// 3. Возвращаем Global исходное значение
+		Global = checkout
+	}(Global)
+
+	// 2. Меняем значение
+	Global = 42
+	// 2.1 Демонстрируем измененное значение
+	fmt.Println("change", Global)
 }
 
 func main() {
-	// fmt.Println(unintuitive())
-	fmt.Println(intuitive())
+	// 0. Выводим начальное значение
+	fmt.Println("first", Global)
+	useGlobal()
+	// 4. Демонстрируем возвращенное значение
+	fmt.Println("final", Global)
+
 }
