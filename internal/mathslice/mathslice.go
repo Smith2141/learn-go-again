@@ -19,7 +19,7 @@ func MapSlice(slice Slice, op func(Element) Element) {
     }
 }
 
-// FolвSlice — сворачивает слайс.
+// FoldSlice — сворачивает слайс.
 func FoldSlice(slice Slice, op func(Element, Element) Element, init Element) (res Element) {
     res = op(init, slice[0])
     for i := 1; i < len(slice); i++ {
