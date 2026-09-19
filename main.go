@@ -1,11 +1,13 @@
 package main
 
 import (
-	"my-go-app/internal/mathslice"
 	"fmt"
+	"my-go-app/internal/mathslice"
 )
 
 func main() {
+
+	mathslice.EchoMessage()
 
 	s := mathslice.Slice{1, 2, 3}
 	fmt.Println(s)
