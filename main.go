@@ -1,28 +1,36 @@
 package main
 
 import (
+	"my-go-app/internal/mathslice"
 	"fmt"
 )
 
-var Global = 5
-
-func useGlobal() {
-	defer func(checkout int) {
-		// 3. Возвращаем Global исходное значение
-		Global = checkout
-	}(Global) // 1. Ловим начальное значение Global
-
-	// 2. Меняем значение
-	Global = 42
-	// 2.1 Демонстрируем измененное значение
-	fmt.Println("change", Global)
-}
-
 func main() {
-	// 0. Выводим начальное значение
-	fmt.Println("first", Global)
-	useGlobal()
-	// 4. Демонстрируем возвращенное значение
-	fmt.Println("final", Global)
+
+	s := mathslice.Slice{1, 2, 3}
+	fmt.Println(s)
+	fmt.Println("Сумма слайса: ", mathslice.SumSlice(s))
+
+	mathslice.MapSlice(s, func(i mathslice.Element) mathslice.Element {
+		return i * 2
+	})
+
+	fmt.Println("Слайс, умноженный на два: ", s)
+
+	fmt.Println("Сумма слайса: ", mathslice.SumSlice(s))
+
+	fmt.Println("Свёртка слайса умножением ",
+		mathslice.FoldSlice(s,
+			func(x mathslice.Element, y mathslice.Element) mathslice.Element {
+				return x * y
+			},
+			1))
+
+	fmt.Println("Свёртка слайса сложением ",
+		mathslice.FoldSlice(s,
+			func(x mathslice.Element, y mathslice.Element) mathslice.Element {
+				return x + y
+			},
+			0))
 
 }
