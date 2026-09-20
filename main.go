@@ -2,37 +2,14 @@ package main
 
 import (
 	"fmt"
-	"my-go-app/internal/mathslice"
+
+	"my-go-app/toppackage/middlepackage/bottompackage/mathxxx"
 )
 
 func main() {
+	if sum := mathxxx.AddInts(3, 2); sum != 5 {
+		panic(fmt.Sprintf("sum must be equal 5; got %d", sum))
+	}
 
-	mathslice.EchoMessage()
-
-	s := mathslice.Slice{1, 2, 3}
-	fmt.Println(s)
-	fmt.Println("Сумма слайса: ", mathslice.SumSlice(s))
-
-	mathslice.MapSlice(s, func(i mathslice.Element) mathslice.Element {
-		return i * 2
-	})
-
-	fmt.Println("Слайс, умноженный на два: ", s)
-
-	fmt.Println("Сумма слайса: ", mathslice.SumSlice(s))
-
-	fmt.Println("Свёртка слайса умножением ",
-		mathslice.FoldSlice(s,
-			func(x mathslice.Element, y mathslice.Element) mathslice.Element {
-				return x * y
-			},
-			1))
-
-	fmt.Println("Свёртка слайса сложением ",
-		mathslice.FoldSlice(s,
-			func(x mathslice.Element, y mathslice.Element) mathslice.Element {
-				return x + y
-			},
-			0))
-
+	fmt.Println("Well done!")
 }
