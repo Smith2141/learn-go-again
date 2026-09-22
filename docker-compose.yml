@@ -9,6 +9,9 @@ services:
       - "2345:2345"
     environment:
       - GOGC=10 # Опционально
+      # Перенаправляем кэш и пути Go в рабочую директорию, где есть права:
+      - GOPATH=/app/go
+      - GOCACHE=/app/.cache
     command: ["-c", ".air.toml"]
     stdin_open: true
     tty: true

@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 
-	"my-go-app/toppackage/middlepackage/bottompackage/mathxxx"
+	"github.com/Smith2141/gdp"
 )
 
 func main() {
-	if sum := mathxxx.AddInts(3, 2); sum != 5 {
-		panic(fmt.Sprintf("sum must be equal 5; got %d", sum))
+	if sum := gdp.Add(1, 2); sum != 3 {
+		panic(fmt.Sprintf("sum expected to be 3; got %d", sum))
 	}
 
 	fmt.Println("Well done!")

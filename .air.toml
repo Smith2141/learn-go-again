@@ -6,7 +6,7 @@ tmp_dir = "tmp"
 entrypoint = ["./tmp/main"]
 cmd = "go build -gcflags=\"all=-N -l\" -o ./tmp/main ."
 delay = 1000
-exclude_dir = ["tmp", "vendor", ".git", ".vscode"]
+exclude_dir = ["tmp", "vendor", ".git", ".vscode", ".go", ".cache"]
 exclude_file = []
 exclude_regex = []
 exclude_unchanged = false
