@@ -1,4 +1,4 @@
-module main
+module myproject.local
 
 go 1.26.0
 

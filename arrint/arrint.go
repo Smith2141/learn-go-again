@@ -24,6 +24,8 @@ func Add(a, b ArrInt) ArrInt {
 	return c
 }
 
+// # Преобразование массива в строку
+//
 // Метод String преобразует ArrInt в строку и возвращает её.
 // Параметр a представляет собой массив целых чисел
 func (a ArrInt) String() string {

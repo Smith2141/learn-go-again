@@ -1,6 +1,6 @@
 services:
   app:
-    image: cosmtrek/air # Официальный образ Air
+    image: cosmtrek/air
     container_name: go-dev
     working_dir: /app
     volumes:
@@ -8,10 +8,23 @@ services:
     ports:
       - "2345:2345"
     environment:
-      - GOGC=10 # Опционально
-      # Перенаправляем кэш и пути Go в рабочую директорию, где есть права:
+      - GOGC=10
       - GOPATH=/app/go
       - GOCACHE=/app/.cache
     command: ["-c", ".air.toml"]
     stdin_open: true
     tty: true
+
+  # Новый сервис для просмотра документации
+  godoc:
+    image: golang:1.26-alpine # Сохраняем версию, которую требует ваш go.mod
+    container_name: go-doc
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "6060:6060"
+    # Скачиваем pkgsite и принудительно биндим его на 0.0.0.0:6060
+    command: >
+      sh -c "go install golang.org/x/pkgsite/cmd/pkgsite@latest && 
+        /go/bin/pkgsite -http=0.0.0.0:6060"

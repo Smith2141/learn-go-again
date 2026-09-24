@@ -1,4 +1,4 @@
-package main
+package myproject.local
 
 import (
 	"fmt"
