@@ -1,4 +1,4 @@
-module myproject.local
+module learn-go-again
 
 go 1.26.0
 

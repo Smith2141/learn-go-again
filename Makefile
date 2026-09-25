@@ -19,7 +19,8 @@ shell:
 
 # Запуск приложения
 run:
-	@docker compose exec app go run main.go
+# 	@docker compose exec app go run main.go
+	@docker compose exec app go run .
 
 # Запуск с переменной окружения
 run-env:
